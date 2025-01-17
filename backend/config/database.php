@@ -1,12 +1,14 @@
 <?php
-class Database {
+class Database
+{
     private $host = 'localhost';
     private $db_name = 'your_database';
     private $username = 'root';
     private $password = '';
     private $conn;
 
-    public function connect() {
+    public function connect()
+    {
         $this->conn = null;
 
         try {
@@ -16,7 +18,7 @@ class Database {
                 $this->password
             );
             $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        } catch(PDOException $e) {
+        } catch (PDOException $e) {
             echo "Connection Error: " . $e->getMessage();
         }
 
