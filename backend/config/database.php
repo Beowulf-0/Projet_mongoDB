@@ -1,25 +1,21 @@
 <?php
+require 'vendor/autoload.php';
+
 class Database {
-    private $host = 'localhost';
-    private $db_name = 'your_database';
-    private $username = 'root';
-    private $password = '';
-    private $conn;
+    private $client;
+    private $database;
 
-    public function connect() {
-        $this->conn = null;
-
+    public function __construct() {
         try {
-            $this->conn = new PDO(
-                "mysql:host=" . $this->host . ";dbname=" . $this->db_name,
-                $this->username,
-                $this->password
-            );
-            $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        } catch(PDOException $e) {
-            echo "Connection Error: " . $e->getMessage();
+            // Connexion à MongoDB
+            $this->client = new MongoDB\Client("mongodb://localhost:27017");
+            $this->database = $this->client->vacation_booking;
+        } catch (MongoDB\Driver\Exception\Exception $e) {
+            echo "Erreur de connexion à MongoDB: " . $e->getMessage();
         }
+    }
 
-        return $this->conn;
+    public function getDatabase() {
+        return $this->database;
     }
 }
